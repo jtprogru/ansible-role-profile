@@ -1,10 +1,10 @@
 ---
-- name: "создаем группу для пользователя"
+- name: "create global group"
   group:
     name: "{{ sysops_employer.group }}"
     state: present
 
-- name: "создаем пользователя под которым будем ходить на сервер"
+- name: "create you personal user"
   user:
     name: "{{ sysops_employer.name }}"
     shell: /bin/bash
@@ -12,7 +12,7 @@
     password: "{{ sysops_employer.password | password_hash('sha512') }}"
     update_password: always
 
-- name: "включаем includedir в настройках sudoers"
+- name: "enable includedir parameter"
   lineinfile:
     path: /etc/sudoers
     state: present
@@ -20,36 +20,45 @@
     line: 'includedir /etc/sudoers.d'
     validate: /usr/sbin/visudo -cf %s
 
-- name: "добавляем свой конфиг для sudoers и проверяем его перед сохранением"
+- name: "add your sudoers-file and check them"
   template:
     src: "sudoers.j2"
     dest: "/etc/sudoers.d/10-admins.conf"
   notify: check sudoers
 
-- name: "добавляем созданному пользователю свой ключ"
+- name: "add you ssh key to authorized_key"
   authorized_key:
     user: "{{ sysops_employer.name }}"
     key: "{{ sysops_employer.key }}"
 
-- name: "Create .bash_profile"
+- name: "create .bash_profile"
   template:
     src: "bash_profile.j2"
     dest: "/home/{{ sysops_employer.name }}/.bash_profile"
+    owner: "{{ sysops_employer.name }}"
+    group: "{{ sysops_employer.name }}"
+    mode: 0664
 
 - name: "Create .bashrc"
   template:
     src: "bashrc.j2"
     dest: "/home/{{ sysops_employer.name }}/.bashrc"
+    owner: "{{ sysops_employer.name }}"
+    group: "{{ sysops_employer.name }}"
+    mode: 0664
 
 - name: "Install VIM."
   package:
     name: vim
-    state: latest
+    state: present
 
 - name: "Create .vimrc."
   template:
     src: "vimrc.j2"
     dest: "{{ item }}"
+    owner: "{{ sysops_employer.name }}"
+    group: "{{ sysops_employer.name }}"
+    mode: 0664
   with_items:
     - "/home/{{ sysops_employer.name }}/.vimrc"
     - "/root/.vimrc"

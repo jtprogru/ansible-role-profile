@@ -1,3 +1,5 @@
 ---
 - name: check sudoers
   shell: /usr/sbin/visudo -cf %s
+  tags:
+    - skip_list
