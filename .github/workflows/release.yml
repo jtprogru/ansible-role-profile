@@ -28,7 +28,8 @@ jobs:
       - name: Install Ansible.
         run: |
           set -x
-          python3 -m pip install --upgrade pip wheel ansible
+          python3 -m pip install --upgrade pip wheel
+          python3 -m pip install --upgrade ansible
 
       - name: Trigger a new import on Galaxy.
         run: |
