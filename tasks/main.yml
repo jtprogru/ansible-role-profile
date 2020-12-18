@@ -24,6 +24,9 @@
   template:
     src: "sudoers.j2"
     dest: "/etc/sudoers.d/10-admins.conf"
+    owner: "root"
+    group: "root"
+    mode: 0440
   notify: check sudoers
 
 - name: "add you ssh key to authorized_key"
