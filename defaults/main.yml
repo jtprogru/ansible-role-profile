@@ -1,3 +1,4 @@
+---
 my_configuration_sysops_employer:
   name: "savin"
   password: "!vault |

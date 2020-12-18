@@ -1,3 +1,4 @@
+---
 - name: "создаем группу для пользователя"
   group:
     name: "{{ sysops_employer.group }}"
