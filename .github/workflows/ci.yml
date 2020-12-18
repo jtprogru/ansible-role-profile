@@ -63,8 +63,13 @@ jobs:
         with:
           python-version: '3.9'
 
+      - name: Check Python version
+        run: |
+          python -V || python3 -V
+          pip -V || pip3 -V
+
       - name: Install test dependencies.
-        run: python3 -m pip install ansible molecule[docker] docker
+        run: pip install ansible molecule[docker] docker
 
       - name: Run Molecule tests.
         run: molecule test
