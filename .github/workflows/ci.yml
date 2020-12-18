@@ -29,7 +29,7 @@ jobs:
           python-version: '3.9'
 
       - name: Install test dependencies.
-        run: python3 -m pip install yamllint ansible-lint
+        run: python3 -m pip install yamllint ansible-lint wheel
 
       - name: Lint code.
         run: |
@@ -56,20 +56,15 @@ jobs:
       - name: Check out the codebase.
         uses: actions/checkout@v2
         with:
-          path: 'jtprog.install_docker'
+          path: 'jtprog.my_configuration'
 
       - name: Set up Python 3.
         uses: actions/setup-python@v2
         with:
           python-version: '3.9'
 
-      - name: Check Python version
-        run: |
-          python -V || python3 -V
-          pip -V || pip3 -V
-
       - name: Install test dependencies.
-        run: pip install ansible molecule[docker] docker
+        run: python3 -m pip install ansible molecule[docker] docker
 
       - name: Run Molecule tests.
         run: molecule test
