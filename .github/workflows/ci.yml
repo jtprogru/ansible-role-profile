@@ -15,7 +15,7 @@ jobs:
 
   lint:
     name: Lint
-    runs-on: ubuntu-1804
+    runs-on: ubuntu-18.04
     steps:
       - name: Check out the codebase.
         uses: actions/checkout@v2
