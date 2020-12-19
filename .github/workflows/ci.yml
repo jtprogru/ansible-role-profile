@@ -31,8 +31,8 @@ jobs:
       - name: Install test dependencies.
         run: |
           set -x
-          python3 -m pip install --upgrade pip wheel
-          python3 -m pip install --upgrade yamllint ansible-lint
+          pip3 install --upgrade pip wheel
+          pip3 install --upgrade yamllint ansible-lint ansible
 
       - name: Lint code.
         run: |
@@ -69,8 +69,8 @@ jobs:
       - name: Install test dependencies.
         run: |
           set -x
-          python3 -m pip install --upgrade pip wheel
-          python3 -m pip install --upgrade ansible molecule-docker molecule[docker] docker
+          pip3 install --upgrade pip wheel
+          pip3 install --upgrade ansible molecule-docker molecule[docker] docker
 
       - name: Run Molecule tests.
         run: |
