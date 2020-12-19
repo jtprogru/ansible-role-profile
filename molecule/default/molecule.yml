@@ -2,7 +2,12 @@
 dependency:
   name: galaxy
 driver:
-  name: docker
+  name: delegated
+  options:
+    managed: False
+    login_cmd_template: 'docker exec -ti {instance} bash'
+    ansible_connection_options:
+      ansible_connection: docker
 # lint: |
 #   set -e
 #   yamllint .
