@@ -29,7 +29,7 @@ jobs:
 
       - name: Install test dependencies.
         run: |
-          set -x
+          set -e
           pip3 install --upgrade pip wheel
           pip3 install --upgrade yamllint ansible-lint ansible
 
@@ -45,14 +45,14 @@ jobs:
       max-parallel: 4
       matrix:
         include:
-          # - distro: ubuntu2004
-          #   playbook: converge.yml
+          - distro: ubuntu2004
+            playbook: converge.yml
           - distro: ubuntu1804
             playbook: converge.yml
-          # - distro: debian10
-          #   playbook: converge.yml
-          # - distro: debian9
-          #   playbook: converge.yml
+          - distro: debian10
+            playbook: converge.yml
+          - distro: debian9
+            playbook: converge.yml
 
 
     steps:
@@ -68,14 +68,14 @@ jobs:
 
       - name: Install test dependencies.
         run: |
-          set -x
+          set -e
           pip3 install --upgrade pip wheel
           pip3 install --upgrade ansible molecule[docker] docker
 
       - name: Run Molecule tests.
         run: |
-          set -x
-          molecule test --debug -v
+          set -e
+          molecule test
         env:
           PY_COLORS: '1'
           ANSIBLE_FORCE_COLOR: '1'
