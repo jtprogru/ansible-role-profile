@@ -5,8 +5,8 @@ name: CI
   push:
     branches:
       - master
-  schedule:
-    - cron: "0 4 * * 4"
+  # schedule:
+  #   - cron: "0 4 * * 4"
 
 defaults:
   run:
@@ -16,7 +16,7 @@ jobs:
 
   lint:
     name: Lint
-    runs-on: ubuntu-2004
+    runs-on: ubuntu-1804
     steps:
       - name: Check out the codebase.
         uses: actions/checkout@v2
