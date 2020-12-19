@@ -4,14 +4,14 @@ dependency:
 driver:
   name: delegated
   options:
-    managed: False
+    managed: false
     login_cmd_template: 'docker exec -ti {instance} bash'
     ansible_connection_options:
       ansible_connection: docker
-# lint: |
-#   set -e
-#   yamllint .
-#   ansible-lint
+lint: |
+  set -e
+  yamllint .
+  ansible-lint
 platforms:
   - name: instance
     image: "geerlingguy/docker-${MOLECULE_DISTRO:-centos8}-ansible:latest"

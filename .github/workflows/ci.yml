@@ -1,6 +1,6 @@
 ---
 name: CI
-on:
+'on':
   push:
     branches:
       - master
@@ -29,7 +29,6 @@ jobs:
 
       - name: Install test dependencies.
         run: |
-          set -e
           pip3 install --upgrade pip wheel
           pip3 install --upgrade yamllint ansible-lint ansible
 
@@ -68,14 +67,11 @@ jobs:
 
       - name: Install test dependencies.
         run: |
-          set -e
           pip3 install --upgrade pip wheel
           pip3 install --upgrade ansible molecule[docker] docker
 
       - name: Run Molecule tests.
-        run: |
-          set -e
-          molecule test
+        run: molecule test
         env:
           PY_COLORS: '1'
           ANSIBLE_FORCE_COLOR: '1'

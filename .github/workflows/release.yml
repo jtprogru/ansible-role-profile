@@ -27,11 +27,9 @@ jobs:
 
       - name: Install Ansible.
         run: |
-          set -x
           python3 -m pip install --upgrade pip wheel
           python3 -m pip install --upgrade ansible
 
       - name: Trigger a new import on Galaxy.
         run: |
-          set -x
           ansible-galaxy role import --api-key ${{ secrets.ANSIBLE_GALAXY_API_KEY }} $(echo ${{ github.repository }} | cut -d/ -f1) $(echo ${{ github.repository }} | cut -d/ -f2)
