@@ -15,7 +15,7 @@ jobs:
 
   lint:
     name: Lint
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
     steps:
       - name: Check out the codebase.
         uses: actions/checkout@v2
@@ -42,16 +42,17 @@ jobs:
     name: Molecule
     runs-on: ubuntu-latest
     strategy:
+      max-parallel: 4
       matrix:
         include:
-          - distro: ubuntu2004
-            playbook: converge.yml
+          # - distro: ubuntu2004
+          #   playbook: converge.yml
           - distro: ubuntu1804
             playbook: converge.yml
-          - distro: debian10
-            playbook: converge.yml
-          - distro: debian9
-            playbook: converge.yml
+          # - distro: debian10
+          #   playbook: converge.yml
+          # - distro: debian9
+          #   playbook: converge.yml
 
 
     steps:
@@ -69,12 +70,12 @@ jobs:
         run: |
           set -x
           pip3 install --upgrade pip wheel
-          pip3 install --upgrade ansible molecule-docker molecule[docker] docker
+          pip3 install --upgrade ansible molecule[docker] docker
 
       - name: Run Molecule tests.
         run: |
           set -x
-          molecule test
+          molecule test --debug -v
         env:
           PY_COLORS: '1'
           ANSIBLE_FORCE_COLOR: '1'
