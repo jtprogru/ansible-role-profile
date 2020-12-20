@@ -1,6 +1,6 @@
 ---
 galaxy_info:
-  role_name: my_configuration
+  role_name: profile
   author: Mihael Savin
   description: Ansible role for configuration personal account on remote servers
   company: SysOps
@@ -17,5 +17,7 @@ galaxy_info:
 
   galaxy_tags:
     - configuration
+    - profile
+    - development
 
 dependencies: []

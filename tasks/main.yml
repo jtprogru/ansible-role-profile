@@ -1,15 +1,15 @@
 ---
 - name: "create global group"
   group:
-    name: "{{ sysops_employer.group }}"
+    name: "{{ profile_group }}"
     state: present
 
 - name: "create you personal user"
   user:
-    name: "{{ sysops_employer.name }}"
+    name: "{{ profile_name }}"
     shell: /bin/bash
-    groups: "{{ sysops_employer.group }}"
-    password: "{{ sysops_employer.password | password_hash('sha512') }}"
+    groups: "{{ profile_group }}"
+    password: "{{ profile_password | password_hash('sha512') }}"
     update_password: always
 
 - name: "enable includedir parameter"
@@ -31,37 +31,51 @@
 
 - name: "add you ssh key to authorized_key"
   authorized_key:
-    user: "{{ sysops_employer.name }}"
-    key: "{{ sysops_employer.key }}"
+    user: "{{ profile_name }}"
+    key: "{{ profile_key }}"
 
-- name: "create .bash_profile"
-  template:
-    src: "bash_profile.j2"
-    dest: "/home/{{ sysops_employer.name }}/.bash_profile"
-    owner: "{{ sysops_employer.name }}"
-    group: "{{ sysops_employer.name }}"
-    mode: 0664
+- name: Ensure dotfiles repository is cloned locally.
+  git:
+    repo: "{{ profile_dotconf_repo }}"
+    dest: "{{ profile_dotconf_repo_local_destination }}"
+    version: "{{ profile_dotconf_repo_version }}"
+    accept_hostkey: "{{ profile_dotconf_repo_accept_hostkey }}"
+  become: true
+  become_user: "{{ profile_name }}"
 
-- name: "Create .bashrc"
-  template:
-    src: "bashrc.j2"
-    dest: "/home/{{ sysops_employer.name }}/.bashrc"
-    owner: "{{ sysops_employer.name }}"
-    group: "{{ sysops_employer.name }}"
-    mode: 0664
+- name: ensure all configured dotfiles are links.
+  command: "ls -F {{ profile_dotconf_home }}/{{ item }}"
+  register: existing_dotfile_info
+  failed_when: false
+  check_mode: false
+  changed_when: false
+  with_items: "{{ profile_dotconf_files }}"
+
+- name: remove existing dotfiles file if a replacement is being linked.
+  file:
+    path: "{{ dotfiles_home }}/{{ dotfiles_files[item.0] }}"
+    state: absent
+  when: "'@' not in item.1.stdout"
+  with_indexed_items: "{{ existing_dotfile_info.results }}"
+
+- name: place plugin for vim.
+  get_url:
+    url: "{{ profile_vim_plug_remote }}"
+    dest: "/home/{{ profile_name }}/{{ profile_vim_plug_local }}"
+    owner: "{{ profile_name }}"
+    group: "{{ profile_name }}"
+    mode: 0644
+
+- name: place personal config.
+  get_url:
+    url: "{{ item.remote }}"
+    dest: "/home/{{ profile_name }}/{{ item.local }}"
+    owner: "{{ profile_name }}"
+    group: "{{ profile_name }}"
+    mode: 0644
+  with_items: "{{ profile_dotconf_files }}"
 
 - name: "Install VIM."
   package:
     name: vim
     state: present
-
-- name: "Create .vimrc."
-  template:
-    src: "vimrc.j2"
-    dest: "{{ item }}"
-    owner: "{{ sysops_employer.name }}"
-    group: "{{ sysops_employer.name }}"
-    mode: 0664
-  with_items:
-    - "/home/{{ sysops_employer.name }}/.vimrc"
-    - "/root/.vimrc"
