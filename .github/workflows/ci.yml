@@ -4,12 +4,10 @@ name: CI
   push:
     branches:
       - master
-  schedule:
-    - cron: "0 4 * * 4"
 
 defaults:
   run:
-    working-directory: 'jtprog.my_configuration'
+    working-directory: 'jtprogru.profile'
 
 jobs:
 
@@ -20,7 +18,7 @@ jobs:
       - name: Check out the codebase.
         uses: actions/checkout@v2
         with:
-          path: 'jtprog.my_configuration'
+          path: 'jtprogru.profile'
 
       - name: Set up Python 3.
         uses: actions/setup-python@v2

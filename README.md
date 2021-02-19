@@ -1,6 +1,6 @@
-# jtprog.profile
+# jtprogru.profile
 
-![GitHub Workflow Status](https://img.shields.io/github/workflow/status/jtprog/ansible-role-profile/CI?label=CI) ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/jtprog/ansible-role-profile/Release?label=Release) ![GitHub](https://img.shields.io/github/license/jtprog/ansible-role-profile) ![Ansible Role](https://img.shields.io/ansible/role/52416) 
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/jtprogru/ansible-role-profile/CI?label=CI) ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/jtprogru/ansible-role-profile/Release?label=Release) ![GitHub](https://img.shields.io/github/license/jtprogru/ansible-role-profile) ![Ansible Role](https://img.shields.io/ansible/role/52416) 
 
 This is my personal role for configure my account on remote servers
 
@@ -83,7 +83,7 @@ Encryption successful
 
 
   roles:
-     - jtprog.profile
+     - jtprogru.profile
 ```
 
 ## License
