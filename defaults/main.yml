@@ -1,5 +1,5 @@
 ---
-profile_name: "savin"
+profile_name: "jtprogru"
 profile_password: "!vault |
   $ANSIBLE_VAULT;1.1;AES256
   66303239653430313165373362383164373333303638646664616664356330373865333539323566
@@ -8,7 +8,7 @@ profile_password: "!vault |
   3933623264356335380a636361373561373430626563363761626130366134353633633739336361
   3834"
 
-profile_key: "https://github.com/jtprog.keys"
+profile_key: "https://github.com/jtprogru.keys"
 profile_group: "admins"
 
 profile_dotconf_files:
@@ -33,3 +33,32 @@ profile_dotconf_files:
 
 profile_vim_plug_remote: "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
 profile_vim_plug_local: "~/.vim/autoload/plug.vim"
+
+profile_macos_homebrew:
+  - atom
+  - curl
+  - gh
+  - git
+  - git-lfs
+  - helm
+  - htop
+  - httpie
+  - jq
+  - keepassxc
+  - mtr
+  - ncdu
+  - neofetch
+  - newsboat
+  - pcsc-lite
+  - pwgen
+  - python@3.9
+  - rsync
+  - speedtest-cli
+  - sqlite
+  - tmux
+  - vim
+  - wget
+  - yubico-piv-tool
+  - zsh-autosuggestions
+  - zsh-syntax-highlighting
+
