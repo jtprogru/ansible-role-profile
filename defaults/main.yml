@@ -35,7 +35,6 @@ profile_vim_plug_remote: "https://raw.githubusercontent.com/junegunn/vim-plug/ma
 profile_vim_plug_local: "~/.vim/autoload/plug.vim"
 
 profile_macos_homebrew:
-  - atom
   - curl
   - gh
   - git
@@ -56,9 +55,9 @@ profile_macos_homebrew:
   - speedtest-cli
   - sqlite
   - tmux
+  - tree
   - vim
   - wget
-  - yubico-piv-tool
   - zsh-autosuggestions
   - zsh-syntax-highlighting
 
