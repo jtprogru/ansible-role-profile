@@ -1,6 +1,7 @@
 ---
 galaxy_info:
   role_name: profile
+  namespace: jtprogru
   author: Mihael Savin
   description: Ansible role for configuration personal account on remote servers
   company: SysOps

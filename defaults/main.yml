@@ -34,30 +34,53 @@ profile_dotconf_files:
 profile_vim_plug_remote: "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
 profile_vim_plug_local: "~/.vim/autoload/plug.vim"
 
-profile_macos_homebrew:
+profile_vimrc_colorscheme: delek
+
+profile_macos_homebrew_formelae:
+  - ansible
   - curl
+  - freetype
+  - fzf
   - gh
   - git
   - git-lfs
+  - gnu-getopt
+  - gnupg
+  - gnutls
   - helm
   - htop
   - httpie
+  - imagemagick
   - jq
-  - keepassxc
   - mtr
   - ncdu
   - neofetch
   - newsboat
-  - pcsc-lite
+  - openssl@1.1
   - pwgen
   - python@3.9
+  - ranger
   - rsync
   - speedtest-cli
   - sqlite
+  - telnet
   - tmux
   - tree
+  - vagrant-completion
   - vim
   - wget
+  - xmlto
   - zsh-autosuggestions
   - zsh-syntax-highlighting
 
+profile_macos_homebrew_casks:
+  - atom
+  - keepassxc
+  - smcfancontrol
+  - vagrant
+  - vagrant-manager
+  - virtualbox
+  - virtualbox-extension-pack
+  - visual-studio-code
+
+profile_bash_history_time_format: ''
