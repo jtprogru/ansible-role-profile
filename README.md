@@ -1,6 +1,6 @@
 # jtprogru.profile
 
-![GitHub Workflow Status](https://img.shields.io/github/workflow/status/jtprogru/ansible-role-profile/CI?label=CI) ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/jtprogru/ansible-role-profile/Release?label=Release) ![GitHub](https://img.shields.io/github/license/jtprogru/ansible-role-profile) ![Ansible Role](https://img.shields.io/ansible/role/53231)
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/jtprogru/ansible-role-profile/CI?label=CI) ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/jtprogru/ansible-role-profile/Release?label=Release) ![GitHub](https://img.shields.io/github/license/jtprogru/ansible-role-profile) [![Ansible Role](https://img.shields.io/ansible/role/53231)](https://galaxy.ansible.com/jtprogru/profile/)
 
 This is my personal role for configure my account on local machine (macOS) and remote servers (Linux)
 
