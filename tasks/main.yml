@@ -1,19 +1,20 @@
 ---
 - name: "create global group"
-  group:
+  ansible.builtin.group:
     name: "{{ profile_group }}"
     state: present
 
 - name: "create you personal user"
-  user:
+  ansible.builtin.user:
     name: "{{ profile_name }}"
     shell: /bin/bash
     groups: "{{ profile_group }}"
     password: "{{ profile_password | password_hash('sha512') }}"
     update_password: always
+  when: profile_password is defined
 
 - name: "enable includedir parameter"
-  lineinfile:
+  ansible.builtin.lineinfile:
     path: /etc/sudoers
     state: present
     regexp: '^includedir /etc/sudoers.d'
@@ -21,7 +22,7 @@
     validate: /usr/sbin/visudo -cf %s
 
 - name: "add your sudoers-file and check them"
-  template:
+  ansible.builtin.template:
     src: "sudoers.j2"
     dest: "/etc/sudoers.d/10-admins.conf"
     owner: "root"
@@ -35,7 +36,7 @@
     key: "{{ profile_key }}"
 
 - name: Ensure dotfiles repository is cloned locally.
-  git:
+  ansible.builtin.git:
     repo: "{{ profile_dotconf_repo }}"
     dest: "{{ profile_dotconf_repo_local_destination }}"
     version: "{{ profile_dotconf_repo_version }}"
@@ -44,7 +45,7 @@
   become_user: "{{ profile_name }}"
 
 - name: ensure all configured dotfiles are links.
-  command: "ls -F {{ profile_dotconf_home }}/{{ item }}"
+  ansible.builtin.command: "ls -F {{ profile_dotconf_home }}/{{ item }}"
   register: existing_dotfile_info
   failed_when: false
   check_mode: false
@@ -52,14 +53,14 @@
   with_items: "{{ profile_dotconf_files }}"
 
 - name: remove existing dotfiles file if a replacement is being linked.
-  file:
+  ansible.builtin.file:
     path: "{{ dotfiles_home }}/{{ dotfiles_files[item.0] }}"
     state: absent
   when: "'@' not in item.1.stdout"
   with_indexed_items: "{{ existing_dotfile_info.results }}"
 
 - name: place plugin for vim.
-  get_url:
+  ansible.builtin.get_url:
     url: "{{ profile_vim_plug_remote }}"
     dest: "/home/{{ profile_name }}/{{ profile_vim_plug_local }}"
     owner: "{{ profile_name }}"
@@ -67,7 +68,7 @@
     mode: 0644
 
 - name: place personal config.
-  get_url:
+  ansible.builtin.get_url:
     url: "{{ item.remote }}"
     dest: "/home/{{ profile_name }}/{{ item.local }}"
     owner: "{{ profile_name }}"
@@ -76,6 +77,6 @@
   with_items: "{{ profile_dotconf_files }}"
 
 - name: "Install VIM."
-  package:
+  ansible.builtin.package:
     name: vim
     state: present
