@@ -35,6 +35,12 @@
     user: "{{ profile_name }}"
     key: "{{ profile_key }}"
 
+- name: "Install software."
+  ansible.builtin.package:
+    name: "{{ item }}"
+    state: present
+  with_items: "{{ profile_sofrwares }}"
+
 - name: Ensure dotfiles repository is cloned locally.
   ansible.builtin.git:
     repo: "{{ profile_dotconf_repo }}"
@@ -76,7 +82,3 @@
     mode: 0644
   with_items: "{{ profile_dotconf_files }}"
 
-- name: "Install VIM."
-  ansible.builtin.package:
-    name: vim
-    state: present
