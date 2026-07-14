@@ -3,7 +3,7 @@
 ![CI](https://img.shields.io/github/actions/workflow/status/jtprogru/ansible-role-profile/ci.yml?branch=master&label=CI)
 ![Release](https://img.shields.io/github/actions/workflow/status/jtprogru/ansible-role-profile/release.yml?label=Release)
 ![License](https://img.shields.io/github/license/jtprogru/ansible-role-profile)
-![Ansible Role](https://img.shields.io/ansible/role/52416)
+[![Ansible Galaxy](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fgalaxy.ansible.com%2Fapi%2Fv1%2Froles%2F15131%2F&query=%24.summary_fields.versions%5B0%5D.name&label=galaxy&color=blue)](https://galaxy.ansible.com/ui/standalone/roles/jtprogru/profile/)
 
 My personal role for configuring a user account on remote Linux servers: it creates a group and a personal user, grants that group passwordless sudo, installs the user's SSH key, and installs a configurable list of packages.
 
