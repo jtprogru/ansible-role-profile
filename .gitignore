@@ -2,7 +2,12 @@
 .DS_Store
 venv/
 env/
+.venv/
 .idea/
+*.pyc
 __pycache__/
 .env
 .vscode/
+.pytest_cache/
+.molecule/
+.ansible/

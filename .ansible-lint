@@ -1,5 +1,10 @@
 ---
+# Named rules replace the deprecated numeric IDs (306/305/106).
 skip_list:
-  - '306'
-  - '305'
-  - '106'
+  # The role is published as the namespaced "jtprogru.profile"; the CI checkout
+  # path contains a dot, which the role-name rule would otherwise flag.
+  - role-name
+
+exclude_paths:
+  - .github/
+  - .venv/

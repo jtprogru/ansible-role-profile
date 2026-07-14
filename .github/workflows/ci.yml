@@ -4,7 +4,7 @@ name: CI
   pull_request:
   push:
     branches:
-      - develop
+      - master
 
 defaults:
   run:
@@ -14,56 +14,56 @@ jobs:
 
   lint:
     name: Lint
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
       - name: Check out the codebase.
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           path: 'jtprogru.profile'
 
+      - name: Set up uv.
+        uses: astral-sh/setup-uv@v6
+
       - name: Set up Python 3.
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v5
         with:
           python-version: '3.x'
 
-      - name: Upgrade pip3.
-        run: pip3 install --upgrade pip
-
       - name: Install test dependencies.
-        run: pip3 install yamllint ansible-lint ansible
+        run: uv pip install --system -r requirements.txt
 
       - name: Lint code.
         run: |
           yamllint .
           ansible-lint
+
   molecule:
     name: Molecule
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         distro:
-          - ubuntu2004
-          - ubuntu1804
-          - debian10
-          - debian9
-          - centos7
+          - ubuntu2604
+          - debian13
+          - rockylinux9
 
     steps:
       - name: Check out the codebase.
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           path: 'jtprogru.profile'
 
+      - name: Set up uv.
+        uses: astral-sh/setup-uv@v6
+
       - name: Set up Python 3.
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v5
         with:
           python-version: '3.x'
 
-      - name: Upgrade pip3.
-        run: pip3 install --upgrade pip
-
       - name: Install test dependencies.
-        run: pip3 install ansible molecule[docker] docker
+        run: uv pip install --system -r requirements.txt
 
       - name: Run Molecule tests.
         run: molecule test
