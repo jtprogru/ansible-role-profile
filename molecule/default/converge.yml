@@ -1,7 +1,10 @@
 ---
 - name: Converge
   hosts: all
-  become: true
+  # The geerlingguy testing images already run as root, so no privilege
+  # escalation is needed. Using sudo here breaks on the EL9 image under CI
+  # ("sudo: PAM account management error"); consumers still set become in
+  # their own playbook (see README).
 
   # Test-only values: a static SSH key (no network dependency on GitHub) and a
   # throwaway password so the user-creation task is actually exercised.
