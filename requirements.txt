@@ -1,0 +1,12 @@
+# Development and CI toolchain (installed into a local .venv via uv).
+# Pinned to floors current as of July 2026; upgrade freely.
+ansible-core>=2.20
+# password_hash() runs on the controller; Python 3.13+ dropped the stdlib crypt
+# module, so passlib is required to hash profile_password.
+passlib>=1.7
+molecule>=25.0
+molecule-plugins[docker]>=23.7
+ansible-lint>=25.0
+yamllint>=1.35
+pytest>=8.0
+pytest-testinfra>=10.0

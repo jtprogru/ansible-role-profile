@@ -1,82 +1,42 @@
 ---
-- name: "create global group"
+- name: "Create global group"
   ansible.builtin.group:
     name: "{{ profile_group }}"
     state: present
 
-- name: "create you personal user"
+- name: "Create personal user"
   ansible.builtin.user:
     name: "{{ profile_name }}"
-    shell: /bin/bash
+    shell: "{{ profile_user_shell }}"
     groups: "{{ profile_group }}"
+    append: true
     password: "{{ profile_password | password_hash('sha512') }}"
-    update_password: always
+    update_password: on_create
   when: profile_password is defined
 
-- name: "enable includedir parameter"
+- name: "Enable includedir parameter in sudoers"
   ansible.builtin.lineinfile:
     path: /etc/sudoers
     state: present
-    regexp: '^includedir /etc/sudoers.d'
-    line: 'includedir /etc/sudoers.d'
+    regexp: '^[@#]?includedir /etc/sudoers.d'
+    line: '@includedir /etc/sudoers.d'
     validate: /usr/sbin/visudo -cf %s
 
-- name: "add your sudoers-file and check them"
+- name: "Add sudoers drop-in file for the group"
   ansible.builtin.template:
     src: "sudoers.j2"
     dest: "/etc/sudoers.d/10-admins.conf"
     owner: "root"
     group: "root"
-    mode: 0440
-  notify: check sudoers
+    mode: "0440"
+    validate: /usr/sbin/visudo -csf %s
 
-- name: "add you ssh key to authorized_key"
-  authorized_key:
+- name: "Add SSH key to authorized_keys"
+  ansible.posix.authorized_key:
     user: "{{ profile_name }}"
     key: "{{ profile_key }}"
 
-- name: Ensure dotfiles repository is cloned locally.
-  ansible.builtin.git:
-    repo: "{{ profile_dotconf_repo }}"
-    dest: "{{ profile_dotconf_repo_local_destination }}"
-    version: "{{ profile_dotconf_repo_version }}"
-    accept_hostkey: "{{ profile_dotconf_repo_accept_hostkey }}"
-  become: true
-  become_user: "{{ profile_name }}"
-
-- name: ensure all configured dotfiles are links.
-  ansible.builtin.command: "ls -F {{ profile_dotconf_home }}/{{ item }}"
-  register: existing_dotfile_info
-  failed_when: false
-  check_mode: false
-  changed_when: false
-  with_items: "{{ profile_dotconf_files }}"
-
-- name: remove existing dotfiles file if a replacement is being linked.
-  ansible.builtin.file:
-    path: "{{ dotfiles_home }}/{{ dotfiles_files[item.0] }}"
-    state: absent
-  when: "'@' not in item.1.stdout"
-  with_indexed_items: "{{ existing_dotfile_info.results }}"
-
-- name: place plugin for vim.
-  ansible.builtin.get_url:
-    url: "{{ profile_vim_plug_remote }}"
-    dest: "/home/{{ profile_name }}/{{ profile_vim_plug_local }}"
-    owner: "{{ profile_name }}"
-    group: "{{ profile_name }}"
-    mode: 0644
-
-- name: place personal config.
-  ansible.builtin.get_url:
-    url: "{{ item.remote }}"
-    dest: "/home/{{ profile_name }}/{{ item.local }}"
-    owner: "{{ profile_name }}"
-    group: "{{ profile_name }}"
-    mode: 0644
-  with_items: "{{ profile_dotconf_files }}"
-
-- name: "Install VIM."
+- name: "Install vim"
   ansible.builtin.package:
     name: vim
     state: present
