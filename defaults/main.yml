@@ -1,16 +1,16 @@
----
 # Login name of the personal user to create.
 profile_name: "jtprogru"
-
 # Group granted passwordless sudo via /etc/sudoers.d/10-admins.conf.
 profile_group: "admins"
-
 # SSH public key(s) added to the user's authorized_keys.
 # Accepts a raw key string or an HTTP(S) URL (e.g. GitHub .keys endpoint).
 profile_key: "https://github.com/jtprogru.keys"
-
 # Login shell for the personal user.
 profile_user_shell: "/bin/bash"
-
 # Optional: set `profile_password` (ideally via ansible-vault) to manage the
 # user's password. When undefined, the password is left untouched.
+
+# Packages installed for the user via the system package manager.
+profile_packages:
+  - git
+  - vim
