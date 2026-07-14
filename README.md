@@ -67,6 +67,24 @@ make test-all   # runs ubuntu2604, debian13, rockylinux9
 
 Handy sub-commands during development: `make converge`, `make verify`, `make login`, `make destroy`.
 
+## Releasing
+
+Versions are published to Ansible Galaxy by pushing a git tag: the `release.yml` workflow runs `ansible-galaxy role import` on every tag push.
+
+This role uses **CalVer** tags in the form `YYYY.M.PATCH` (e.g. `2026.7.14`). This is deliberate:
+
+- Galaxy only recognises tags that are valid [SemVer](https://semver.org/) — three components, `MAJOR.MINOR.PATCH`. Two-component tags like `v1.9` are silently ignored and never become an installable version.
+- The role's published history is already CalVer (`2020.12.1` … `2021.2.1`), so any new SemVer like `1.9.0` would rank *below* them and would not become "latest". Continuing CalVer keeps each release strictly greater than the last.
+
+To cut a release, tag `master` and push:
+
+```bash
+git tag -a 2026.7.14 -m "Release 2026.7.14"
+git push origin 2026.7.14
+```
+
+Do **not** use `vX.Y` tags — they do not publish.
+
 ## License
 
 [WTFPL](LICENSE)
