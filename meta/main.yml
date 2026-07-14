@@ -28,5 +28,9 @@ galaxy_info:
     - sudo
     - ssh
     - users
+    - system
+    - packages
+    - provisioning
+    - linux
 
 dependencies: []
