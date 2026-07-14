@@ -53,7 +53,8 @@ def test_authorized_key(host):
     assert TEST_KEY_MARKER in authorized_keys.content_string
 
 
-def test_vim_installed(host):
-    # Assert the binary rather than a package name: on RHEL family the rpm is
-    # vim-enhanced, on Debian/Ubuntu it is vim.
-    assert host.exists("vim")
+def test_packages_installed(host):
+    # Assert the binaries rather than package names: names differ across
+    # families (e.g. on RHEL vim ships as vim-enhanced, on Debian as vim).
+    for binary in ("git", "vim"):
+        assert host.exists(binary)

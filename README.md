@@ -5,7 +5,7 @@
 ![License](https://img.shields.io/github/license/jtprogru/ansible-role-profile)
 ![Ansible Role](https://img.shields.io/ansible/role/52416)
 
-My personal role for configuring a user account on remote Linux servers: it creates a group and a personal user, grants that group passwordless sudo, installs the user's SSH key, and installs vim.
+My personal role for configuring a user account on remote Linux servers: it creates a group and a personal user, grants that group passwordless sudo, installs the user's SSH key, and installs a configurable list of packages.
 
 ## Role Variables
 
@@ -18,6 +18,7 @@ See `defaults/main.yml`. All variables are validated via `meta/argument_specs.ym
 | `profile_key` | `https://github.com/jtprogru.keys` | SSH public key(s) for `authorized_keys`. Accepts a raw key string or an HTTP(S) URL. |
 | `profile_user_shell` | `/bin/bash` | Login shell for the personal user. |
 | `profile_password` | _(unset)_ | Optional user password. When unset, the password is left untouched. |
+| `profile_packages` | `[git, vim]` | Packages installed for the user via the system package manager. |
 
 If you want to manage the user's password, set `profile_password` — ideally encrypted with `ansible-vault`:
 

@@ -36,7 +36,8 @@
     user: "{{ profile_name }}"
     key: "{{ profile_key }}"
 
-- name: "Install vim"
+- name: "Install packages"
   ansible.builtin.package:
-    name: vim
+    name: "{{ item }}"
     state: present
+  loop: "{{ profile_packages }}"

@@ -4,7 +4,7 @@ argument_specs:
     short_description: Configure a personal account on remote Linux servers
     description:
       - Creates a group and a personal user, grants the group passwordless
-        sudo, installs the user's SSH key and vim.
+        sudo, installs the user's SSH key and a configurable list of packages.
     options:
       profile_name:
         type: str
@@ -32,3 +32,11 @@ argument_specs:
         description: >-
           Optional password for the user (ideally supplied via ansible-vault).
           When omitted, the password is left untouched.
+      profile_packages:
+        type: list
+        elements: str
+        required: false
+        default:
+          - git
+          - vim
+        description: Packages installed for the user via the system package manager.
